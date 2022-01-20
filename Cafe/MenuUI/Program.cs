@@ -1,4 +1,5 @@
 ﻿using System;
+using MenuUI.Consoles;
 
 namespace MenuUI
 {
@@ -6,8 +7,10 @@ namespace MenuUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("External console is working. Press any key to exit...");
-            Console.ReadKey();
+            // Where we will build the UI
+            IConsole console = new RealConsole();
+            UserInterface ui = new UserInterface(console);
+            ui.Run();
         }
     }
 }

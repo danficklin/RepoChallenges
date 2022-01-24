@@ -55,7 +55,10 @@ namespace ClaimsUI
         {
             _console.Clear();
             Queue<Claim> listOfClaims = _repo.GetClaims();
+            PrintHeader();
             foreach(Claim content in listOfClaims) { PrintContent(content); }
+            _console.WriteLine("Press any key to continue... ");
+            _console.ReadKey();
         }
         private void GetClaimByID() // Method to find a claim by its ID (not currently used)
         {
@@ -63,7 +66,7 @@ namespace ClaimsUI
             _console.WriteLine("Enter a claim ID: ");
             int targetID = int.Parse( _console.ReadLine());
             Claim content = _repo.GetClaimByID(targetID);
-            if(content != null) { PrintContent(content); }
+            if(content != null) { PrintHeader(); PrintContent(content); }
             else { _console.WriteLine("ID not found."); }
             _console.WriteLine("Press any key to continue...");
             _console.ReadLine();
@@ -148,15 +151,21 @@ namespace ClaimsUI
         }
         private void PrintContent(Claim content) // Helper method for printing the content of a claim
         {
-            _console.WriteLine(
-                            $"Claim ID: {content.ClaimID} \n" +
-                            $"Type of claim: {content.ClaimType} \n" +
-                            $"Description: {content.Description} \n" +
-                            $"Claim amount: {content.ClaimAmount} \n" +
-                            $"Date of incident: {content.DateOfIncident} \n" +
-                            $"Date of claim: {content.DateOfClaim} \n" +
-                            $"Claim is valid? {content.IsValid} \n\n"
-            );
+            string claims = string.Format("{0} {1, 12} {2, 33} {3, 15} {4, 26} {5, 32} {6, 21}\n",
+            content.ClaimID, content.ClaimType, content.Description, content.ClaimAmount, content.DateOfIncident.ToShortDateString(), content.DateOfClaim.ToShortDateString(), content.IsValid);
+            _console.WriteLine(claims);
+        }
+
+        private void PrintHeader() // Helper method for printing the header
+        {
+            string header = string.Format("{0} {1, 15} {2, 15} {3, 29} {4, 27} {5, 25} {6, 25}\n",
+            "Claim ID", "Type of Claim", "Description", "Claim Amount", "Date of Incident", "Date of Claim", "Claim is Valid?");
+            _console.WriteLine(header);
         }
     }
 }
+
+
+
+// Breaks when date isn't entered correctly
+// Weird formatting offset

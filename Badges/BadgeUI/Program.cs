@@ -1,4 +1,5 @@
 ﻿using System;
+using BadgeUI.Consoles;
 
 namespace BadgeUI
 {
@@ -6,7 +7,9 @@ namespace BadgeUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IConsole console = new RealConsole();
+            BadgesUserInterface ui = new BadgesUserInterface(console);
+            ui.Run();
         }
     }
 }
